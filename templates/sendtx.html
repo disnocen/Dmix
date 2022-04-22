@@ -1,0 +1,47 @@
+
+
+<html>
+    <head>
+        <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+        <title>
+            P2T dashboard
+        </title>
+
+    </head>
+
+    <body>
+
+        <div class="totaleTitolo">
+            <div class = "titolo">
+                Welcome <br>
+                to the best way <br>
+                to interact with your <br>
+                bitcoin-core wallet
+            </div>
+            <div>
+                <img src="/static/img/btcWallet2.png">
+            </div>
+        </div>
+    
+
+        <div class = "totale" style = "margin-top: 3%;">
+            <div class = "advancement">
+                Send a transaction
+                <form action="/sendtx">
+                    <input type="text" name="addr"
+                        placeholder="Insert address here"></input>
+                    <br>
+                    <label class="blocks" for="amt">What amount
+                        <input type="number" name="amt" value=1 >
+                    </label>
+                    <br>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+            <div class="scritteDestra">
+                Qui compare l'indirizzo creato
+            </div>
+        </div>   
+
+    </body>
+    

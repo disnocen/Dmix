@@ -1,0 +1,111 @@
+
+<html>
+    <head>
+        <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+        <title>
+            P2T dashboard
+        </title>
+
+    </head>
+
+    <body>
+
+        <div class="totaleTitolo">
+            <div class = "titolo">
+                Welcome <br>
+                to the best way <br>
+                to interact with your <br>
+                bitcoin-core wallet
+            </div>
+            <div>
+                <img src="/static/img/btcWallet2.png">
+            </div>
+        </div>
+        
+        
+        <!-- <div class = "otherLinks"> -->
+        <!--     <a href="/sendtxhtml">Click here to send a transaction</a> -->
+        <!-- </div> -->
+        
+        <div class = "otherLinks">
+            <a href="/sendtxchoosesender">Click here to send a transaction</a>
+        </div>
+        
+        <!-- primo blocco orizzontale -->
+        <div class = "totale">
+            <div class = "advancement">
+                Advancement of block
+                <form action="/createblocks">
+                    <label class="blocks" for="nblocks">How many blocks?
+                        <input type="number" name="nblocks" value=10 >
+                    </label>
+                    <br>
+                    <input type="text" name="addr" placeholder="Insert address here"></input>
+                    <br>
+                    <input type="submit" value="Advance">
+                </form>
+            </div>
+            <div class="scritteDestra">
+                Qui compare l'indirizzo creato
+            </div>
+        </div>
+        <!-- secondo blocco orizzontale -->
+
+        <div class = "totale">
+            <div class = "advancement">
+                Create a new address            
+                <form mehtod='POST' action="/">
+                    <label class="container" for="legacy">Legacy
+                        <input type="checkbox" id = "legacy" name="legacy">
+                        <span class="checkmark"></span>
+                    </label>
+                    <input type="submit" value="New Address">
+                </form>
+            </div>
+            <div class="scritteDestra">
+                {{ address }}
+            </div>
+        </div>
+        
+        <div class="totale">
+            <div class = "advancement">
+                List unspent transactions
+                <form action="/listunspent">
+                    <input type="submit" value="List It">
+                </form>
+            </div>
+            <div class="scritteDestra">
+                Qui compare l'indirizzo creato
+            </div>
+        </div>
+        <div class="totale">
+            <div class = "advancement">
+                Get a transaction
+                <form action="/gettx">
+                    <input type="text" name="txhash" placeholder="Insert tx hash here">
+                    <input type="submit" value="Get your balance">
+                </form>
+            </div>
+            <div class="scritteDestra">
+                Qui compare l'indirizzo creato
+            </div>
+        </div>
+        <div class="totale">
+            <div class = "advancement">
+                Get your balance
+                <form action="/balance">
+                    <input type="submit" value="Get your balance">
+                </form>
+            </div>
+            <div class="scritteDestra">
+                Qui compare l'indirizzo creato
+            </div>
+        </div>
+        
+
+        
+        
+
+
+    </body>
+    

@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <title>
+            P2T dashboard
+        </title>
+<style>
+body {
+    background-color: light-grey;
+    color: black
+}
+</style>
+    </head>
+
+    <body>
+        <center>
+                <big><big>Welcome to the best way to interact with your bitcoin-core wallet
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        Some other links:
+        <a href="sendtx.html">Send a transaction</a>
+<hr>
+        Advancement of block. How many?
+<form action="/createblocks">
+        <label for="nblocks">How many blocks?</label>
+        <input type="number" name="nblocks" value=10 ></input>
+        <br>
+        <label for="addr">Insert address here:</label>
+        <input type="text" name="addr"
+               placeholder="bc1..."
+               ></input>
+          <input type="submit" value="Advance!">
+</form>
+<hr>
+        Press the button for a new address!
+<form action="/newaddr">
+    <input type="checkbox" id="legacy" name="legacy">Legacy?
+        <br>
+          <input type="submit" value="New Address!">
+</form>
+<hr>
+        Press the button for list unspent!
+<form action="/listunspent">
+          <input type="submit" value="List It!">
+</form>
+<hr>
+        Get your balance
+<form action="/balance">
+          <input type="submit" value="balance">
+</form>
+<hr>
+            <!-- <form method="post"> -->
+        <!-- <label for="listunspent">Insert video search</label> -->
+        <!-- <br> -->
+        <!-- <input type="text" name="listunspent" -->
+            <!--    placeholder="e.g. george hotz chat" -->
+            <!--    ></input> -->
+        <!-- <br> -->
+        <!-- <label for="word_search">Insert video search</label> -->
+        <!-- <br> -->
+        <!-- <input type="text" name="word_search" -->
+            <!--    placeholder="e.g. linux" -->
+            <!--    ></input> -->
+        <!-- <br> -->
+        <!-- <label for="limit">Insert limit search (the more, the slower!)</label> -->
+        <!-- <br> -->
+        <!-- <input type="number" name="limit" -->
+            <!--    value=10 -->
+            <!--    ></input> -->
+        <!-- <br> -->
+
+        <!-- <br> -->
+        <!-- <button type="submit">Submit</button> -->
+    <!-- </form> -->
+</big></big></big></big></big>
+    
