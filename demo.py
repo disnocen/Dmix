@@ -1,6 +1,18 @@
 import ecdsa
 import base58
 import hashlib
+import asyncio
+from bitcoinrpc import BitcoinRPC
+from bitcoinutils.setup import setup
+from bitcoinutils.keys import P2pkhAddress, PrivateKey, PublicKey
+
+
+# doo tath before running the program
+
+# bitcoind -fallbackfee=0.01
+# btc loadwallet testing
+
+rpc = BitcoinRPC("http://127.0.0.1:18443", "user", "password")
 
 # convert data to base58
 def base58_encode(data):
@@ -42,23 +54,45 @@ def to_wif(private_key,net="regtest",compressed=True):
         suffix = b''
 
     checksum_key = checksum(prefix + private_key.to_string() + suffix)
-    print(checksum_key.hex())
     key = prefix + private_key.to_string() + suffix + checksum_key
-    return base58_encode(key)
-
-(sk,pk) = create_keys()
+    return base58_encode(key).decode()
 
 
+# create three private keys; convert to wif format and store it in bitcoin node
+async def import_wif_in_node(wif):
+    # importprivkey "privkey" ( "label" ) ( rescan )
+    # loop = asyncio.get_event_loop()
+    x = await rpc.acall("importprivkey",[wif, "", False])
+    # loop.close()
+    return x
 
-# print the private key
-print("Private key: ", sk.to_string().hex())
-print("Wif: ", to_wif(sk))
+def create_keys_and_wif(net="regtest",compressed=True):
+    private_key1, public_key1 = create_keys()
+    private_key2, public_key2 = create_keys()
+    private_key3, public_key3 = create_keys()
+    wif1 = to_wif(private_key1)
+    wif2 = to_wif(private_key2)
+    wif3 = to_wif(private_key3)
+    print(wif1,wif2,wif3)
+    # print(import_wif_in_node(wif1),import_wif_in_node(wif2),import_wif_in_node(wif3))
+    return wif1,wif2,wif3
 
-# print public key
-print("Public key hex: ", pk.to_string().hex())
-print("Public key : ", pk.to_string())
-print("Public key der ", pk.to_der().hex())
-print("public key x ", pk.pubkey.point.x())
-print("public key y ", pk.pubkey.point.y())
+async def send_a_bitcoin(address):
+    x = await rpc.acall("sendtoaddress",[address, 1])
+    print(x)
 
-# convert public ky into bitcoin curve point
+async def main():
+    setup('regtest')
+    a = create_keys_and_wif()
+    x = await asyncio.gather(import_wif_in_node(a[0]),import_wif_in_node(a[1]),import_wif_in_node(a[2]))  # import_wif_in_node(i)
+    privs = [PrivateKey.from_wif(wiff) for wiff in a]
+    pubs = [priv.get_public_key() for priv in privs]
+    addresses = [pub.get_address() for pub in pubs]
+    print([addresses[0].to_string(),addresses[1].to_string(),addresses[2].to_string()])
+    xx = await asyncio.gather(send_a_bitcoin(addresses[0].to_string()),send_a_bitcoin(addresses[1].to_string()),send_a_bitcoin(addresses[2].to_string()))
+    x = await rpc.acall("generatetoaddress",[101,"mjzcYyrS6GLyyowPfqbx3thenXZQ6ig4QY"])
+
+    
+
+if __name__ == "__main__":
+    asyncio.run(main())
