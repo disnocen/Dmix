@@ -314,6 +314,34 @@ def schnorr_musig_sign(msg: bytes, users: list) -> bytes:
     return signature_bytes, bytes_from_point(X)
 
 
+
+# key aggreation musig2
+def musig2_key_aggregation(users: list):
+    # Key aggregation (KeyAgg), L = h(P1 || ... || Pn)
+    L = b''
+    for u in users:
+        L += pubkey_gen_from_hex(u["privateKey"])
+    L = sha256(L)
+
+    X = None
+    for u in users:
+        # Get private key di and public key Pi
+        di = int_from_hex(u["privateKey"])
+        if not (1 <= di <= n - 1):
+            raise ValueError('The secret key must be an integer in the range 1..n-1.')
+        Pi = pubkey_point_gen_from_int(di)
+        assert Pi is not None
+
+        # KeyAggCoef
+        # ai = h(L||Pi)
+        ai = int_from_bytes(sha256(L + bytes_from_point(Pi)))
+        u["ai"] = ai
+
+        # Computation of X~
+        # X~ = X1 + ... + Xn, Xi = ai * Pi 
+        X = point_add(X, point_mul(Pi, ai))
+        return X
+
 # Generate Schnorr MuSig2 signature
 def schnorr_musig2_sign(msg: bytes, users: list) -> bytes:
     if len(msg) != 32:

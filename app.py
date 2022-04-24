@@ -18,6 +18,7 @@ from bitcoinrpc import BitcoinRPC
 
 # Create the application.
 APP = Quart(__name__)
+rpc = BitcoinRPC("http://127.0.0.1:18443", "user", "password")
 
 
 # await rpc.getconnectioncount()
